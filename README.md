@@ -28,7 +28,7 @@ This repository serves as my personal learning space for experimenting with Linu
 | Project                     | Description                                                                 | Status      |
 | --------------------------- | --------------------------------------------------------------------------- | ----------- |
 | Password Generator          | Generates secure random passwords with validation and file-saving features. | ✅ Completed |
-| Linux Cheatsheet            | Collection of commonly used Linux commands and examples.                    | 🚧 Planned  |
+| Linux Cheatsheet            | Collection of commonly used Linux commands and examples.                    | ✅ Completed |
 | System Information Reporter | Displays detailed information about the system.                             | 🚧 Planned  |
 | File Organizer              | Automatically organizes files into folders.                                 | 🚧 Planned  |
 | User Management System      | Bash-based user management utility.                                         | 🚧 Planned  |
