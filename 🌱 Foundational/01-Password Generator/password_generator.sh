@@ -120,14 +120,14 @@ generate_password() {
     local char_upper char_lower char_digit char_special char_rest combined password
 
     # Pull one guaranteed character from each required category
-    char_upper=$(cat /dev/urandom | tr -dc "$UPPERCASE" | head -c 1)
-    char_lower=$(cat /dev/urandom | tr -dc "$LOWERCASE" | head -c 1)
-    char_digit=$(cat /dev/urandom | tr -dc "$DIGITS"    | head -c 1)
-    char_special=$(cat /dev/urandom | tr -dc "$SPECIAL" | head -c 1)
+    char_upper=$(tr -dc "$UPPERCASE" < /dev/urandom | head -c 1)
+    char_lower=$(tr -dc "$LOWERCASE" < /dev/urandom | head -c 1)
+    char_digit=$(tr -dc "$DIGITS"    < /dev/urandom | head -c 1)
+    char_special=$(tr -dc "$SPECIAL" < /dev/urandom | head -c 1)
 
     # Fill the remaining slots with characters from the full pool
     local remaining=$(( length - 4 ))
-    char_rest=$(cat /dev/urandom | tr -dc "$ALL_CHARS" | head -c "$remaining")
+    char_rest=$(tr -dc "$ALL_CHARS" < /dev/urandom | head -c "$remaining")
 
     # Concatenate all parts, then shuffle character-by-character with 'shuf'
     combined="${char_upper}${char_lower}${char_digit}${char_special}${char_rest}"
@@ -187,7 +187,7 @@ save_password() {
         echo "     [3] Cancel  — do not save"
         echo ""
         echo -n "  Your choice (1/2/3): "
-        read SAVE_MODE
+        read -r SAVE_MODE
 
         case "$SAVE_MODE" in
             1)
@@ -221,7 +221,7 @@ while true; do
     # ── STEP 1: Prompt for length — loop until valid input is given ──────────
     while true; do
         echo -ne "  Enter desired password length ${BOLD}(4 - 128)${RESET}: "
-        read LENGTH
+        read -r LENGTH
         validate_input "$LENGTH" && break
         echo ""
     done
@@ -242,7 +242,7 @@ while true; do
 
     # ── STEP 4: Offer clipboard copy ─────────────────────────────────────────
     echo -ne "  Copy password to clipboard? ${BOLD}(yes/no)${RESET}: "
-    read CLIP_CHOICE
+    read -r CLIP_CHOICE
     CLIP_CHOICE=$(echo "$CLIP_CHOICE" | tr '[:upper:]' '[:lower:]')
     if [ "$CLIP_CHOICE" = "yes" ] || [ "$CLIP_CHOICE" = "y" ]; then
         copy_to_clipboard "$PASSWORD"
@@ -252,7 +252,7 @@ while true; do
 
     # ── STEP 5: Offer to save to file ────────────────────────────────────────
     echo -ne "  Save password to 'generated_password.txt'? ${BOLD}(yes/no)${RESET}: "
-    read SAVE_CHOICE
+    read -r SAVE_CHOICE
     SAVE_CHOICE=$(echo "$SAVE_CHOICE" | tr '[:upper:]' '[:lower:]')
     if [ "$SAVE_CHOICE" = "yes" ] || [ "$SAVE_CHOICE" = "y" ]; then
         save_password "$PASSWORD"
@@ -264,7 +264,7 @@ while true; do
 
     # ── STEP 6: Ask whether to generate another password ─────────────────────
     echo -ne "  Generate another password? ${BOLD}(yes/no)${RESET}: "
-    read AGAIN
+    read -r AGAIN
     AGAIN=$(echo "$AGAIN" | tr '[:upper:]' '[:lower:]')
     echo ""
 
