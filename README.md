@@ -92,7 +92,7 @@ This repository documents my progress as I continue learning Linux, cybersecurit
 
 ## Author
 
-**Kapi**
+**Kapilesh T**
 
 Aspiring AI Security Researcher | Linux Enthusiast | Exploring Cybersecurity, Machine Learning Security, and Open Source Technologies.
 
