@@ -55,6 +55,11 @@ This repository serves as my personal learning space for experimenting with Linu
 
 linux-projects/
 │
+├── README.md
+├── LICENSE
+├── SECURITY.md
+├── .gitignore
+│
 ├── password-generator/
 ├── linux-cheatsheet/
 ├── system-info-reporter/
@@ -64,8 +69,8 @@ linux-projects/
 ├── process-monitor/
 ├── service-monitor/
 ├── backup-restore-utility/
-│
 ├── user-management-system/
+│
 ├── network-scanner/
 ├── log-analysis-tool/
 ├── ssh-audit-tool/
@@ -73,9 +78,9 @@ linux-projects/
 ├── file-integrity-monitor/
 ├── personal-ids/
 ├── server-hardening-toolkit/
+├── threat-intelligence-dashboard/
 │
 ├── docker-monitoring-tool/
-├── threat-intelligence-dashboard/
 ├── home-lab-server/
 │
 ├── llm-security-tester/
