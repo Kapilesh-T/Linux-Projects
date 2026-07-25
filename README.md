@@ -25,20 +25,31 @@ This repository serves as my personal learning space for experimenting with Linu
 
 ## Projects
 
-| Project                     | Description                                                                 | Status      |
-| --------------------------- | --------------------------------------------------------------------------- | ----------- |
-| Password Generator          | Generates secure random passwords with validation and file-saving features. | ✅ Completed |
-| Linux Cheatsheet            | Collection of commonly used Linux commands and examples.                    | ✅ Completed |
-| System Information Reporter | Displays detailed information about the system.                             | 🚧 Planned  |
-| File Organizer              | Automatically organizes files into folders.                                 | 🚧 Planned  |
-| User Management System      | Bash-based user management utility.                                         | 🚧 Planned  |
-| Network Scanner             | Basic network discovery and scanning tool.                                  | 🚧 Planned  |
-| Log Analysis Tool           | Parses and analyzes system logs.                                            | 🚧 Planned  |
-| Personal IDS                | Lightweight intrusion detection project.                                    | 🚧 Planned  |
-| Server Hardening Toolkit    | Security configuration and hardening scripts.                               | 🚧 Planned  |
-| LLM Security Tester         | Experiments with AI and LLM security concepts.                              | 🚧 Planned  |
-| Secure MLOps Pipeline       | Security-focused machine learning workflow project.                         | 🚧 Planned  |
-| Home Lab Server             | Linux-based self-hosted server experiments.                                 | 🚧 Planned  |
+## 🚀 Project Roadmap
+
+| Project | Description | Status |
+|----------|-------------|:------:|
+| 🔐 Password Generator | Secure Bash-based password generator with customizable options. | ✅ Completed |
+| 📚 Linux Cheatsheet | Beginner-friendly Linux command reference with examples. | ✅ Completed |
+| 🖥️ System Information Reporter | Displays detailed Linux system information in a structured report. | ✅ Completed |
+| 📂 File Organizer | Automatically organizes files into folders by type or extension. | 🚧 Planned |
+| 👥 User Management System | Manage Linux users, groups, and permissions using Bash. | 🚧 Planned |
+| 🌐 Network Scanner | Discover hosts and perform basic network scanning. | 🚧 Planned |
+| 📊 Log Analysis Tool | Analyze Linux system logs and generate useful reports. | 🚧 Planned |
+| 🔍 SSH Audit Tool | Audit SSH configuration and identify common security issues. | 🚧 Planned |
+| 🛡️ File Integrity Monitor | Detect unauthorized file modifications using file hashes. | 🚧 Planned |
+| 💽 Disk Usage Analyzer | Analyze disk usage and identify large files and directories. | 🚧 Planned |
+| ⚙️ Process Monitor | Monitor CPU, memory, and running processes in real time. | 🚧 Planned |
+| 🔄 Service Monitor | Monitor system services and detect failures automatically. | 🚧 Planned |
+| 💾 Backup & Restore Utility | Automate backups and restoration of important files. | 🚧 Planned |
+| 🔥 Firewall Manager | Configure and manage UFW/iptables firewall rules. | 🚧 Planned |
+| 🚨 Personal IDS | Lightweight intrusion detection using Linux logs and alerts. | 🚧 Planned |
+| 🔒 Server Hardening Toolkit | Automate Linux security hardening and best practices. | 🚧 Planned |
+| 🐳 Docker Monitoring Tool | Monitor Docker containers, resource usage, and health. | 🚧 Planned |
+| 📡 Threat Intelligence Dashboard | Display and organize threat intelligence from public sources. | 🚧 Planned |
+| 🤖 LLM Security Tester | Explore AI/LLM security concepts and prompt security testing. | 🚧 Planned |
+| 🧠 Secure MLOps Pipeline | Build a security-focused machine learning deployment workflow. | 🚧 Planned |
+| 🏠 Home Lab Server | Self-hosted Linux lab for virtualization, networking, and security experiments. | 🚧 Planned |
 
 ## Repository Structure
 
