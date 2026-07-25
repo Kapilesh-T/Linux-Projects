@@ -18,7 +18,7 @@
 #   ./sysreport.sh -v           Verbose mode (prints extra status messages)
 #   ./sysreport.sh -h           Show help message
 #
-# Author: (your name here)
+# Author: (KAPILESH.T)
 # ==========================================================================
 
 # Stop the script if an undefined variable is used. This helps catch typos
