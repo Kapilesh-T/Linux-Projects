@@ -1,3 +1,4 @@
+<img width="1917" height="1020" alt="Screenshot" src="https://github.com/user-attachments/assets/21c21165-de4f-4dd5-b7fa-9b728a8982ef" />
 # Linux System Information Reporter
 
 A simple Bash script that collects and displays useful information about a
