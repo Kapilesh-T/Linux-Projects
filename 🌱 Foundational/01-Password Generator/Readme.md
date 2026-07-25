@@ -1,3 +1,4 @@
+<img width="480" height="380" alt="Screenshot" src="https://github.com/user-attachments/assets/3463b920-d771-4bd3-a18b-255329f420f2" />
 # Linux Password Generator
 
 A secure and user-friendly password generator written in Bash. This project creates cryptographically random passwords with customizable lengths, password strength indicators, clipboard support, and file-saving functionality.
