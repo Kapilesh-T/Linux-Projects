@@ -53,22 +53,33 @@ This repository serves as my personal learning space for experimenting with Linu
 
 ## Repository Structure
 
-```text
 linux-projects/
 │
 ├── password-generator/
 ├── linux-cheatsheet/
 ├── system-info-reporter/
+│
 ├── file-organizer/
+├── disk-usage-analyzer/
+├── process-monitor/
+├── service-monitor/
+├── backup-restore-utility/
+│
 ├── user-management-system/
 ├── network-scanner/
 ├── log-analysis-tool/
+├── ssh-audit-tool/
+├── firewall-manager/
+├── file-integrity-monitor/
 ├── personal-ids/
-├── server-hardening/
+├── server-hardening-toolkit/
+│
+├── docker-monitoring-tool/
+├── threat-intelligence-dashboard/
+├── home-lab-server/
+│
 ├── llm-security-tester/
-├── secure-mlops-pipeline/
-└── home-lab-server/
-```
+└── secure-mlops-pipeline/
 
 ## Learning Journey
 
