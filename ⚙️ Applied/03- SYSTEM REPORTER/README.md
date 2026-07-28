@@ -10,7 +10,8 @@ This project was built as a first-year Computer Science Linux/Bash
 assignment, and later hardened for portfolio use: input validation, graceful
 handling of missing commands, and consistent error messages.
 
-## Example outpu
+## Example output
+
 
 ```
 ==========================================
