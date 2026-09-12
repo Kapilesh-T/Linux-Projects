@@ -1,44 +1,30 @@
 #!/usr/bin/env bash
 #
-# ==========================================================================
 # System Information Reporter
-# --------------------------------------------------------------------------
-# A simple Bash script that collects and displays basic information about
-# a Linux system: OS details, CPU, memory, disk usage, network, logged in
-# users, internet connectivity, and the top CPU-consuming processes.
+# Collects and prints basic info about a Linux system: OS, CPU, memory,
+# disk, network, logged-in users, internet connectivity, and top
+# processes by CPU usage.
 #
-# The script is written to be safe on many different Linux distributions
-# (Ubuntu, Debian, Fedora, Arch, Rocky, CentOS, ...): if a command or file
-# is missing, the script prints "Unavailable"/"Unknown" for that value
-# instead of crashing.
+# Tries to be safe across different distros (Ubuntu, Debian, Fedora,
+# Arch, Rocky, CentOS) — if a command or file isn't there, it prints
+# "Unavailable"/"Unknown" for that value instead of crashing.
 #
 # Usage:
-#   ./sysreport.sh              Show the report on the screen
-#   ./sysreport.sh -o file.txt  Save the report to a file instead
-#   ./sysreport.sh -v           Verbose mode (prints extra status messages)
-#   ./sysreport.sh -h           Show help message
+#   ./sysreport.sh              print the report
+#   ./sysreport.sh -o file.txt  save the report to a file instead
+#   ./sysreport.sh -v           verbose mode
+#   ./sysreport.sh -h           help
 #
-# Author: (KAPILESH.T)
-# ==========================================================================
+# Author: Kapilesh T
 
-# Stop the script if an undefined variable is used. This helps catch typos
-# in variable names while we are still developing/testing the script.
+# catches typos in variable names while testing
 set -u
 
-# --------------------------------------------------------------------------
-# Global settings (changed by command line options)
-# --------------------------------------------------------------------------
-OUTPUT_FILE=""      # if set, the report is written here instead of the screen
+OUTPUT_FILE=""      # if set, report goes here instead of the screen
 VERBOSE=false       # if true, print extra "doing this now" messages
 
-# --------------------------------------------------------------------------
-# Handle Ctrl+C (and similar interrupts) gracefully
-# --------------------------------------------------------------------------
-# Without this, pressing Ctrl+C while the script is running can leave the
-# terminal in an odd state or just print a raw "Interrupted" message. This
-# prints a clean message and exits with the conventional 130 exit code
-# (128 + signal number 2, which is SIGINT).
-# shellcheck disable=SC2329 # this function IS used, just indirectly via "trap" below
+# handle Ctrl+C cleanly instead of leaving a raw "Interrupted" message
+# shellcheck disable=SC2317 # this function IS used, just indirectly via "trap" below
 handle_interrupt() {
     echo
     echo "Interrupted by user. Exiting."
@@ -58,17 +44,12 @@ log_info() {
     fi
 }
 
-# Check whether a command is installed on this system.
-# Returns 0 (true) if found, 1 (false) if not.
 command_exists() {
     command -v "$1" >/dev/null 2>&1
 }
 
-# Print a consistent "command not found" message for a report section.
-# The caller passes the command name already wrapped in quotes, so this
-# works the same whether it's one command or a couple of alternatives.
-# Usage: print_unavailable "'df'" "disk usage information"
-#        print_unavailable "'ip' or 'ifconfig'" "interface list"
+# consistent "command not found" message for a report section
+# print_unavailable "'df'" "disk usage information"
 print_unavailable() {
     local missing_command="$1"
     local section_description="$2"
@@ -96,10 +77,6 @@ show_help() {
     echo "  -v        Verbose mode, prints progress messages"
     echo "  -h        Show this help message"
 }
-
-# --------------------------------------------------------------------------
-# Functions that collect and print each section of the report
-# --------------------------------------------------------------------------
 
 show_os_info() {
     log_info "Collecting operating system information"

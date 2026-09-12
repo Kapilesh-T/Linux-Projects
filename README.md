@@ -32,7 +32,7 @@ This repository serves as my personal learning space for experimenting with Linu
 | 🔐 Password Generator | Secure Bash-based password generator with customizable options. | ✅ Completed |
 | 📚 Linux Cheatsheet | Beginner-friendly Linux command reference with examples. | ✅ Completed |
 | 🖥️ System Information Reporter | Displays detailed Linux system information in a structured report. | ✅ Completed |
-| 📂 File Organizer | Automatically organizes files into folders by type or extension. | 🚧 Planned |
+| 📂 File Organizer | Automatically organizes files into folders by type or extension. | ✅ Completed |
 | 👥 User Management System | Manage Linux users, groups, and permissions using Bash. | 🚧 Planned |
 | 🌐 Network Scanner | Discover hosts and perform basic network scanning. | 🚧 Planned |
 | 📊 Log Analysis Tool | Analyze Linux system logs and generate useful reports. | 🚧 Planned |
@@ -53,38 +53,29 @@ This repository serves as my personal learning space for experimenting with Linu
 
 ## Repository Structure
 
-linux-projects/
+Projects are grouped by stage. This reflects what's actually in the repo
+today — the roadmap above includes future projects not yet started.
+
+```
+Linux-Projects/
 │
 ├── README.md
 ├── LICENSE
 ├── SECURITY.md
 ├── .gitignore
+├── .gitattributes
 │
-├── password-generator/
-├── linux-cheatsheet/
-├── system-info-reporter/
+├── 🌱 Foundational/
+│   ├── 01-Password Generator/
+│   └── 02-Linux Cheatsheet/
 │
-├── file-organizer/
-├── disk-usage-analyzer/
-├── process-monitor/
-├── service-monitor/
-├── backup-restore-utility/
-├── user-management-system/
-│
-├── network-scanner/
-├── log-analysis-tool/
-├── ssh-audit-tool/
-├── firewall-manager/
-├── file-integrity-monitor/
-├── personal-ids/
-├── server-hardening-toolkit/
-├── threat-intelligence-dashboard/
-│
-├── docker-monitoring-tool/
-├── home-lab-server/
-│
-├── llm-security-tester/
-└── secure-mlops-pipeline/
+└── ⚙️ Applied/
+    ├── 03- SYSTEM REPORTER/
+    └── 04- FILE ORGANIZER/
+```
+
+Each project folder has its own README with setup and usage
+instructions specific to that project.
 
 ## Learning Journey
 
@@ -95,6 +86,9 @@ This repository documents my progress as I continue learning Linux, cybersecurit
 **Kapilesh T**
 
 Aspiring AI Security Researcher | Linux Enthusiast | Exploring Cybersecurity, Machine Learning Security, and Open Source Technologies.
+
+📧 tkapilesh2008@gmail.com
+🔗 [github.com/Kapilesh-T](https://github.com/Kapilesh-T)
 
 ## License
 

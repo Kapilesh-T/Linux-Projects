@@ -1,0 +1,16 @@
+# Runtime logs and transaction history — generated per-run, never committed.
+logs/*.log
+logs/.history/
+
+# Keep the logs/ directory itself tracked via .gitkeep, ignore its contents.
+!logs/.gitkeep
+
+# Local test scratch (if any test is run outside mktemp for debugging)
+/tmp_test_*
+
+# Common OS/editor cruft
+.DS_Store
+*.swp
+*.swo
+.vscode/
+.idea/

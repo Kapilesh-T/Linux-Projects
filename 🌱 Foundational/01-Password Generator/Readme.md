@@ -62,7 +62,7 @@ sudo pacman -S xclip
 Clone the repository:
 
 ```bash
-git clone https://github.com/your-username/linux-password-generator.git
+git clone https://github.com/Kapilesh-T/linux-password-generator.git
 cd linux-password-generator
 ```
 
