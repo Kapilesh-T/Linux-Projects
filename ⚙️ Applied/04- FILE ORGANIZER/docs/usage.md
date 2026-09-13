@@ -3,8 +3,7 @@
 ## Installation
 
 ```bash
-git clone https://github.com/Kapilesh-T/linux-file-organizer.git
-cd linux-file-organizer
+cd "⚙️ Applied/04- FILE ORGANIZER"
 ./install.sh
 ```
 

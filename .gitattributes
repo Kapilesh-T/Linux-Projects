@@ -1,10 +1,7 @@
 # Force LF line endings for all text files, regardless of the
-# contributor's OS or editor settings. Without this, editing a .sh
-# file on Windows (even in something like VS Code with default
-# settings) can silently introduce CRLF line endings, which break
-# Bash's parser on Linux with a "syntax error near unexpected token"
-# on the very first function definition — this happened to two
-# scripts in this repo before this file was added.
+# contributor's OS or editor settings. CRLF line endings break Bash's
+# parser on Linux ("syntax error near unexpected token"), so .sh
+# files must always be stored with LF.
 * text=auto eol=lf
 
 *.sh text eol=lf

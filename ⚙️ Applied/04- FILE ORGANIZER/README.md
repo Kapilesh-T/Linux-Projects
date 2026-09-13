@@ -35,11 +35,13 @@ runaway self-recursion.
 - **Tested** — a 16-test suite covering categorization, duplicates,
   special filenames, dry-run, recursion, hidden files, permission
   errors, symlink safety, config errors, SIGINT interruption, and undo
-  (including the historical empty-target-directory and
-  embedded-tab/newline-filename regressions), run entirely inside
-  `mktemp` sandboxes.
-- **ShellCheck-clean** — `shellcheck -x` passes with zero warnings
-  across every script.
+  with tab/newline filenames, run entirely inside `mktemp` sandboxes.
+  Run them with `./tests/test_organizer.sh` (ShellCheck is not
+  installed in this environment, so I cannot verify the ShellCheck
+  claim here).
+- **ShellCheck-friendly** — written with ShellCheck-style static
+  analysis in mind; shellcheck is a development-time check only and is
+  not needed to run the tool.
 
 ## Demo
 
@@ -67,10 +69,6 @@ Videos:             1
 Dry run complete. No files were modified.
 ```
 
-### Screenshots
-
-_(placeholder — add a terminal screenshot or asciinema recording here)_
-
 ## Installation
 
 **Requirements:** Bash 4.3+ (for associative arrays and namerefs — the
@@ -79,8 +77,7 @@ anything older). No other dependencies; `shellcheck`/`shfmt` are only
 needed for development, not for running the tool.
 
 ```bash
-git clone https://github.com/Kapilesh-T/linux-file-organizer.git
-cd linux-file-organizer
+cd "⚙️ Applied/04- FILE ORGANIZER"
 ./install.sh
 ```
 
@@ -182,10 +179,9 @@ limitations.
 ./tests/test_organizer.sh
 ```
 
-Runs 16 tests (44 assertions as root — 45 as a non-root user, since the
-permission-error test only runs a real check when not root) entirely
-inside `mktemp -d` sandboxes — your real files are never touched, and
-sandboxes are cleaned up automatically. Covers categorization, unknown
+Runs 16 tests inside `mktemp -d` sandboxes — your real files are never
+touched, and the sandboxes are cleaned up automatically. The suite prints
+its own assertion count and summary. It covers categorization, unknown
 extensions, duplicate filenames, special/unicode filenames, dry-run
 correctness, invalid directories, recursive mode + anti-self-recursion,
 hidden-file protection, non-fatal permission errors, symlink safety
@@ -218,13 +214,13 @@ practice is treated as a first-class concern, not an afterthought:
 - **Symlink caution** — `find` runs without `-L`, so it never follows
   symlinked directories, and `-type f` never matches a symlink itself
   (file or directory). In practice this means **any symlink inside the
-  target directory — to a file, to a directory, or broken — is left
+    target directory — to a file, to a directory, or broken — is left
   untouched and never reported**, and a `--recursive` scan can never
-  wander outside the target directory tree through one. Verified with
-  a symlink to a file outside the target dir, a symlink to a directory
-  outside the target dir, and a broken symlink — none were moved,
-  modified, or caused anything outside the target directory to be
-  touched.
+  wander outside the target directory tree through one. The test suite
+  covers symlinks to a file outside the sandbox, a symlink to a
+  directory outside the sandbox, and a broken symlink — none were
+  moved, modified, or caused anything outside the target directory to
+  be touched.
 - **Least privilege** — the tool never requires root, and `install.sh`
   installs into the user's own `~/.local/bin`, not a system directory.
 - **Safe logging** — logs record paths and status only, never file
@@ -235,18 +231,18 @@ practice is treated as a first-class concern, not an afterthought:
 - **Log/history injection resistance** — filenames containing a literal
   TAB, NEWLINE, or the human log's own `|` delimiter are escaped before
   being written, so one logical record always occupies exactly one line
-  in both the human log and the machine-readable undo history.
-  Without this, such a filename could split a record across lines and
-  cause `--undo` to misparse it (found and fixed during audit).
+  in both the human log and the machine-readable undo history. Without
+  this, such a filename could split a record across lines and cause
+  `--undo` to misparse it.
 - **Safe interruption** — `organizer.sh` traps `SIGINT`/`SIGTERM`
   explicitly: an interrupted run is reported as interrupted (exit `130`
   or `143`), never silently reported as a successful completion. Files
   already moved before the interruption stay correctly moved and
   logged; nothing else is touched, and nothing is lost or duplicated.
 
-This project does **not** claim to be exhaustively audited or
-"military-grade" — see [Future Improvements](#future-improvements) for
-known limitations.
+This is a student portfolio project, not production software — see
+[Future Improvements](#future-improvements) for known limitations. Run
+`./tests/test_organizer.sh` to verify behavior before relying on it.
 
 ## Project Structure
 
@@ -271,9 +267,7 @@ linux-file-organizer/
 └── .gitignore
 ```
 
-The `lib/` split (beyond a single monolithic script) exists so each
-concern is independently testable and independently ShellCheck-clean —
-see the commit history / design notes for the full reasoning.
+The `lib/` split keeps each concern small and independently testable.
 
 ## Troubleshooting
 
@@ -289,19 +283,6 @@ common issues and fixes.
   with no or a misleading extension
 - Packaging (`.deb`) for easier distribution
 
-## Contributing
-
-Issues and pull requests are welcome. Please run `shellcheck -x` and
-`./tests/test_organizer.sh` before submitting — both must pass cleanly.
-
 ## License
 
 [MIT](LICENSE)
-
----
-
-### Suggested GitHub metadata
-
-**Description:** A safe, tested, ShellCheck-clean Bash CLI that organizes files by type — with dry-run, recursive mode, and undo.
-
-**Topics:** `linux` `bash` `shell-script` `linux-utility` `file-organizer` `automation` `cybersecurity` `cli`

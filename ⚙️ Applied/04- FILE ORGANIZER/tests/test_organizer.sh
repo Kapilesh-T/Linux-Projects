@@ -251,14 +251,12 @@ test_undo_conflict() {
     rm -rf -- "$dir"
 }
 
-# --- Test 12: regression — an explicitly empty TARGET_DIR ("") must
-# be rejected, never silently default to the current directory --------
+# --- Test 12: an explicitly empty TARGET_DIR ("") must be rejected,
+# never silently default to the current directory --------------------
 #
-# This is a regression test for a real bug found during audit: passing
-# "" was indistinguishable from "no argument given", which defaulted to
-# organizing the CALLER'S CURRENT WORKING DIRECTORY — in one observed
-# case, the project's own source directory. See organizer.sh's argument
-# parser (TARGET_DIR_SET) for the fix.
+# "" is a distinct, invalid input: it must not be treated the same as
+# "no argument given" (which defaults to the current directory).
+# See organizer.sh's argument parser (TARGET_DIR_SET).
 test_empty_target_dir_rejected() {
     run_test "empty-string TARGET_DIR is rejected, not defaulted to cwd"
     local dir marker rc=0
@@ -278,14 +276,14 @@ test_empty_target_dir_rejected() {
     rm -rf -- "$dir"
 }
 
-# --- Test 13: regression — filenames containing a literal TAB or
-# NEWLINE must not corrupt the history file or break --undo -----------
+# --- Test 13: filenames containing a literal TAB or NEWLINE must not
+# corrupt the history file or break --undo ---------------------------
 #
-# Regression test for a real bug found during audit: such filenames
-# used to split one logical transaction across multiple physical lines
-# in logs/.history/*.tsv, causing undo_last_run() to misparse entries
-# and fail to restore the affected files. See escape_for_record /
-# unescape_from_record in lib/fsops.sh for the fix.
+# A transaction record is one physical line in logs/.history/*.tsv.
+# If a path were written unescaped, a file named with a tab or newline
+# would split that record across multiple lines and undo_last_run()
+# would misparse it. Verify that the escaping in escape_for_record /
+# unescape_from_record (lib/fsops.sh) round-trips correctly.
 test_tab_newline_filenames_roundtrip_through_undo() {
     run_test "filenames with embedded TAB/NEWLINE survive organize + undo"
     local dir tab_file nl_file
@@ -312,8 +310,8 @@ test_tab_newline_filenames_roundtrip_through_undo() {
     rm -rf -- "$dir"
 }
 
-# --- Test 14: regression — an explicit --config path that does not
-# exist must fail loudly, never silently fall back to defaults --------
+# --- Test 14: an explicit --config path that does not exist must fail
+# loudly, never silently fall back to defaults ------------------------
 test_missing_explicit_config_errors() {
     run_test "--config with a nonexistent path fails with exit 5"
     local dir rc=0
@@ -362,14 +360,15 @@ test_symlinks_never_touched() {
 # --- Test 16: SIGINT during a run is reported accurately, not
 # silently swallowed into a false "Completed successfully" ----------
 #
-# Regression test for a real (racy) bug found during audit: a SIGINT
-# landing at the wrong moment could close the `find` process
-# substitution's pipe, making the main loop see a normal EOF and print
-# a success summary for a run that was actually cut short — even
-# though the underlying data was always safe (nothing lost, nothing
-# duplicated). Fixed with explicit INT/TERM traps in organizer.sh.
-# Uses a large file count so the run reliably outlasts the 1-second
-# timeout; skips gracefully if `timeout` isn't available.
+# A SIGINT landing while files are being moved can close the `find`
+# process substitution's pipe, making the main loop see a normal EOF
+# and print a success summary for a run that was actually cut short —
+# even though the file data is always safe (nothing lost, nothing
+# duplicated). organizer.sh traps INT/TERM so interruption is reported
+# explicitly with exit code 130/143 instead.
+#
+# Uses a large file count so the run reliably outlasts the signal;
+# skips gracefully if `timeout` isn't available.
 test_sigint_reported_accurately() {
     run_test "SIGINT mid-run is reported as interrupted, not as success"
     local dir outfile pid rc moved remaining waited attempt i
@@ -380,20 +379,15 @@ test_sigint_reported_accurately() {
             : >"${dir}/file_${i}.jpg"
         done
 
-        # Deterministic instead of racing a fixed wall-clock timeout: an
-        # earlier version of this test used `timeout -s INT 1`, which was
-        # occasionally flaky when the run happened to finish faster than
-        # the 1-second window on a lightly-loaded system. Polling for
-        # genuine partial progress (some files already moved, most not)
-        # before sending the signal makes this reliable regardless of
-        # system speed — except under extreme scheduling contention
-        # (observed only when stress-testing this suite dozens of times
-        # back-to-back), where the signal can occasionally be delayed
-        # long enough for the run to finish anyway; the retry loop below
-        # absorbs that residual, environment-induced race rather than
-        # reporting it as a product defect. Every attempt where
-        # interruption was actually achieved has produced the correct
-        # result (exit 130, accurate message, zero data loss).
+        # Deterministic instead of racing a fixed wall-clock timeout: a
+        # fixed `timeout -s INT 1` is flaky when the run happens to
+        # finish faster than the 1-second window on a lightly-loaded
+        # system. Polling for genuine partial progress (some files
+        # already moved, most not) before sending the signal makes this
+        # reliable regardless of system speed. The retry loop below
+        # absorbs the residual case where the run finishes before the
+        # signal lands — that is an environment timing fluke, not a
+        # product defect.
         #
         # `set -m` (job control) matters here: without it, a
         # non-interactive script backgrounding a command with `&` has

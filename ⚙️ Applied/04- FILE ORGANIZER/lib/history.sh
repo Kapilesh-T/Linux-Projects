@@ -111,7 +111,7 @@ undo_last_run() {
         IFS=$'\t' read -r src dest <<<"${lines[$i]}"
         # Reverse escape_for_record's encoding (see lib/fsops.sh and
         # record_transaction above) to recover the real filesystem
-        # paths before using them in any -e/-e/mv test below.
+        # paths before using them in the -e/mv tests below.
         src="$(unescape_from_record "$src")"
         dest="$(unescape_from_record "$dest")"
 

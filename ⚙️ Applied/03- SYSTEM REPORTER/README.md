@@ -1,4 +1,4 @@
-<img width="1917" height="1020" alt="Screenshot" src="https://github.com/user-attachments/assets/21c21165-de4f-4dd5-b7fa-9b728a8982ef" />
+<img width="1917" height="1020" alt="Screenshot" src="Screenshot.png" />
 # Linux System Information Reporter
 
 A simple Bash script that collects and displays useful information about a
@@ -6,9 +6,9 @@ Linux system — operating system details, CPU, memory, disk usage, network
 configuration, logged-in users, internet connectivity, and the top
 CPU-consuming processes.
 
-This project was built as a first-year Computer Science Linux/Bash
-assignment, and later hardened for portfolio use: input validation, graceful
-handling of missing commands, and consistent error messages.
+This project was built as a Linux/Bash practice project. It validates its
+command-line options, handles missing commands gracefully, and prints
+consistent error messages.
 
 ## Example output
 
@@ -60,7 +60,10 @@ If any of the above are missing, the corresponding section of the report
 simply says so (e.g. `Could not find 'df', skipping disk info.`) instead of
 the script crashing.
 
-Tested on Ubuntu, Debian, Fedora, Arch Linux, Rocky Linux, and CentOS.
+Designed for common Linux distributions — Ubuntu, Debian, Fedora, Arch
+Linux, Rocky Linux, CentOS, and similar. When an optional command is
+missing it falls back to reading `/proc` directly, or reports the value as
+unavailable.
 
 ## Usage
 

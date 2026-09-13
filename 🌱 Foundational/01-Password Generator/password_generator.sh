@@ -22,9 +22,9 @@ RESET='\033[0m'
 UPPERCASE="ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 LOWERCASE="abcdefghijklmnopqrstuvwxyz"
 DIGITS="0123456789"
-# the hyphen has to go last here — tr treats "()-_" as a *range* from ')'
-# to '_' and pulls in a bunch of extra ASCII characters you didn't ask for.
-# took me a while to figure out why the special chars looked wrong.
+# The hyphen must be last: inside tr's bracket expression, "()-_"
+# would be treated as a range from ')' to '_' and include extra ASCII
+# characters.
 SPECIAL='!@#$%^&*()_=+[]{}|;:,.<>?-'
 ALL_CHARS="${UPPERCASE}${LOWERCASE}${DIGITS}${SPECIAL}"
 

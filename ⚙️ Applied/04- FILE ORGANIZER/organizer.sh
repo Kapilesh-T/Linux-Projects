@@ -21,12 +21,11 @@ readonly ORGANIZER_VERSION="1.0.0"
 # the main loop below) can close that pipe and make the `while read`
 # loop see a normal EOF — letting the script fall through to the
 # statistics section and print "Completed successfully" / exit 0 for a
-# run that was actually cut short. The underlying data is never wrong
-# (every file that was moved is correctly logged; nothing is lost or
-# duplicated — verified under load with `timeout -s INT`), but that
-# status message and exit code would be misleading. These traps make
-# interruption an explicit, reported outcome instead of an incidental
-# one.
+# run that was actually cut short. Files already moved before the
+# interruption are correctly logged, and nothing is lost or duplicated,
+# but that status message and exit code would be misleading. These
+# traps make interruption an explicit, reported outcome instead of an
+# incidental one.
 _interrupted() {
     local sig="$1"
     echo >&2
@@ -245,9 +244,8 @@ while [[ $# -gt 0 ]]; do
             # An explicitly empty string ("") is a distinct, invalid
             # input — it must NOT be confused with "no positional
             # argument given", which later defaults to the current
-            # directory. Rejecting it here closes a bug where
-            # `organizer.sh ""` silently organized the caller's
-            # current working directory instead of failing loudly.
+            # directory. Treating "" as "no argument" would silently
+            # organize the caller's current working directory.
             if [[ -z "$1" ]]; then
                 die_usage "TARGET_DIR must not be an empty string"
             fi

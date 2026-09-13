@@ -1,95 +1,45 @@
 # Linux Projects
 
-A collection of Linux, Bash, and security-focused projects built to explore system administration, automation, cybersecurity concepts, and practical problem-solving.
-
-## About
-
-This repository serves as my personal learning space for experimenting with Linux, shell scripting, and security-related projects. Each project is designed to improve my understanding of Linux internals, automation, and secure system development through hands-on practice.
-
-## Goals
-
-* Learn Linux system administration and command-line tools.
-* Develop practical Bash scripting skills.
-* Build automation and productivity tools.
-* Explore cybersecurity and system security concepts.
-* Create a strong foundation for AI Security Research.
-
-## Technologies
-
-* Linux
-* Bash Shell Scripting
-* Git and GitHub
-* Command-Line Utilities
-* System Administration Tools
-* Cybersecurity Concepts
+My collection of Linux, Bash, and security projects. Each project folder
+has its own README with setup and usage instructions.
 
 ## Projects
 
-## 🚀 Project Roadmap
+### 🌱 Foundational
 
-| Project | Description | Status |
-|----------|-------------|:------:|
-| 🔐 Password Generator | Secure Bash-based password generator with customizable options. | ✅ Completed |
-| 📚 Linux Cheatsheet | Beginner-friendly Linux command reference with examples. | ✅ Completed |
-| 🖥️ System Information Reporter | Displays detailed Linux system information in a structured report. | ✅ Completed |
-| 📂 File Organizer | Automatically organizes files into folders by type or extension. | ✅ Completed |
-| 👥 User Management System | Manage Linux users, groups, and permissions using Bash. | 🚧 Planned |
-| 🌐 Network Scanner | Discover hosts and perform basic network scanning. | 🚧 Planned |
-| 📊 Log Analysis Tool | Analyze Linux system logs and generate useful reports. | 🚧 Planned |
-| 🔍 SSH Audit Tool | Audit SSH configuration and identify common security issues. | 🚧 Planned |
-| 🛡️ File Integrity Monitor | Detect unauthorized file modifications using file hashes. | 🚧 Planned |
-| 💽 Disk Usage Analyzer | Analyze disk usage and identify large files and directories. | 🚧 Planned |
-| ⚙️ Process Monitor | Monitor CPU, memory, and running processes in real time. | 🚧 Planned |
-| 🔄 Service Monitor | Monitor system services and detect failures automatically. | 🚧 Planned |
-| 💾 Backup & Restore Utility | Automate backups and restoration of important files. | 🚧 Planned |
-| 🔥 Firewall Manager | Configure and manage UFW/iptables firewall rules. | 🚧 Planned |
-| 🚨 Personal IDS | Lightweight intrusion detection using Linux logs and alerts. | 🚧 Planned |
-| 🔒 Server Hardening Toolkit | Automate Linux security hardening and best practices. | 🚧 Planned |
-| 🐳 Docker Monitoring Tool | Monitor Docker containers, resource usage, and health. | 🚧 Planned |
-| 📡 Threat Intelligence Dashboard | Display and organize threat intelligence from public sources. | 🚧 Planned |
-| 🤖 LLM Security Tester | Explore AI/LLM security concepts and prompt security testing. | 🚧 Planned |
-| 🧠 Secure MLOps Pipeline | Build a security-focused machine learning deployment workflow. | 🚧 Planned |
-| 🏠 Home Lab Server | Self-hosted Linux lab for virtualization, networking, and security experiments. | 🚧 Planned |
+- **01-Password Generator** — Bash password generator with configurable
+  length, strength indicator, clipboard copy, and optional save to file.
+  [README](🌱%20Foundational/01-Password%20Generator/README.md)
+- **02-Linux Cheatsheet** — Linux command reference notes: navigation,
+  filesystem, permissions, processes, networking, users and groups,
+  storage, packages, shell scripting, and security.
+  [README](🌱%20Foundational/02-Linux%20Cheatsheet/README.md)
 
-## Repository Structure
+### ⚙️ Applied
 
-Projects are grouped by stage. This reflects what's actually in the repo
-today — the roadmap above includes future projects not yet started.
+- **03- System Reporter** — prints a system information report: OS, CPU,
+  memory, disk, network, users, connectivity, and top processes.
+  [README](⚙️%20Applied/03-%20SYSTEM%20REPORTER/README.md)
+- **04- File Organizer** — organizes files into category folders by
+  type, with dry-run, recursive mode, logging, undo, and a test suite.
+  [README](⚙️%20Applied/04-%20FILE%20ORGANIZER/README.md)
 
-```
-Linux-Projects/
-│
-├── README.md
-├── LICENSE
-├── SECURITY.md
-├── .gitignore
-├── .gitattributes
-│
-├── 🌱 Foundational/
-│   ├── 01-Password Generator/
-│   └── 02-Linux Cheatsheet/
-│
-└── ⚙️ Applied/
-    ├── 03- SYSTEM REPORTER/
-    └── 04- FILE ORGANIZER/
-```
+## Planned ideas
 
-Each project folder has its own README with setup and usage
-instructions specific to that project.
+User and group management, network scanning, log analysis, SSH audit,
+file integrity monitoring, disk usage analysis, process and service
+monitoring, backup and restore, firewall management, and server
+hardening — as I learn each topic.
 
-## Learning Journey
+## Requirements
 
-This repository documents my progress as I continue learning Linux, cybersecurity, and AI security through practical projects and experimentation.
+* Linux with Bash 4.3+ (needed by the File Organizer)
+* Standard command-line tools that ship with any distribution
 
 ## Author
 
-**Kapilesh T**
-
-Aspiring AI Security Researcher | Linux Enthusiast | Exploring Cybersecurity, Machine Learning Security, and Open Source Technologies.
-
-📧 tkapilesh2008@gmail.com
-🔗 [github.com/Kapilesh-T](https://github.com/Kapilesh-T)
+**Kapilesh T** — tkapilesh2008@gmail.com — [github.com/Kapilesh-T](https://github.com/Kapilesh-T)
 
 ## License
 
-This repository is licensed under the MIT License.
+MIT — see [LICENSE](LICENSE).

@@ -56,10 +56,9 @@ log_action() {
     # never split one logical log entry across multiple physical lines
     # (see escape_for_record in lib/fsops.sh for why this matters).
     # The pipe character is escaped too, separately: it's this log's
-    # own field delimiter, so a filename containing literal " | " text
-    # (a real, observed case — e.g. "a | touch hacked.txt") would
+    # own field delimiter, so a literal " | " inside a filename would
     # otherwise be indistinguishable from an extra field boundary when
-    # a human or a script parses the line by splitting on " | ".
+    # the line is parsed by splitting on " | ".
     escape_for_record_var src "$src"
     escape_for_record_var dest "$dest"
     escape_for_record_var detail "$detail"

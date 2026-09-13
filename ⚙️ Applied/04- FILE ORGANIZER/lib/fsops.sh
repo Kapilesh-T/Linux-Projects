@@ -3,8 +3,7 @@
 #
 # Safe filesystem operations: discovering files to organize and moving
 # them without ever overwriting an existing file. This is the
-# safety-critical part of the project — every rule here exists because
-# of a specific, real Bash file-handling failure mode.
+# safety-critical part of the project.
 # shellcheck shell=bash
 #
 # File-wide: SAFE_MOVE_SRC / SAFE_MOVE_DEST / SAFE_MOVE_REASON below
@@ -127,9 +126,8 @@ escape_for_record() {
 # into the variable named VARNAME via `printf -v` instead of returning
 # it on stdout. Performance matters here: logging and history run once
 # per file, and `x="$(escape_for_record "$y")"` forks a subshell every
-# call. On a directory with thousands of files those forks are the
-# dominant cost (measured: ~7ms/file, mostly process-creation
-# overhead) — this variant does the same work with zero forks.
+# call, which is the dominant cost on directories with thousands of
+# files. This variant does the same work with no subshell fork.
 escape_for_record_var() {
     local -n _out="$1"
     local s="$2"
@@ -156,11 +154,11 @@ unescape_from_record() {
 #
 # Communicates its result via the SAFE_MOVE_SRC / SAFE_MOVE_DEST /
 # SAFE_MOVE_REASON globals rather than a delimited string on stdout.
-# An earlier version encoded the result as "STATUS<TAB>SRC<TAB>DEST" on
-# stdout for the caller to re-parse; a filename containing a literal
-# tab or newline could collide with that delimiter and cause the
-# caller to mis-parse its own success/failure result. Globals avoid
-# the problem entirely — no delimiter, no parsing, no collision.
+# A delimiter-based encoding (for example "STATUS<TAB>SRC<TAB>DEST")
+# would be ambiguous for filenames that themselves contain a literal
+# tab or newline, because a reader can't tell a real field separator
+# from one inside a path. Globals avoid the problem entirely — no
+# delimiter, no parsing, no collision.
 #
 # Returns 0 on success (or a successful dry-run simulation), non-zero
 # on failure. Callers (organizer.sh) are responsible for logging the
