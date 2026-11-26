@@ -1,0 +1,26 @@
+name: Bash quality checks
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Install ShellCheck
+        run: sudo apt-get update && sudo apt-get install -y shellcheck
+      - name: Bash syntax and ShellCheck
+        shell: bash
+        run: |
+          while IFS= read -r -d '' file; do
+            bash -n "$file"
+            (cd "$(dirname "$file")" && shellcheck -S warning -x "$(basename "$file")")
+          done < <(find . -type f -name '*.sh' -print0)
+      - name: File Organizer regression tests
+        shell: bash
+        run: bash '⚙️ Applied/04- FILE ORGANIZER/tests/test_organizer.sh'
