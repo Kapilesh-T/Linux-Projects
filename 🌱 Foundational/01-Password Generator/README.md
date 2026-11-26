@@ -56,8 +56,7 @@ Example session (trimmed):
   ones are not grouped at the start.
 * The hyphen in the special-character set must be last — otherwise `tr`
   treats `()-_` as a character range.
-* Saved passwords are stored in plain text. The output file is ignored by
-  Git.
+* Optional saved passwords remain plaintext. The script restricts file permissions and rejects obvious unsafe output paths on Linux; this is not encrypted storage or protection against concurrent local path changes. Use a password manager for real credentials. The output file is ignored by Git when run in the project directory.
 
 ## License
 
