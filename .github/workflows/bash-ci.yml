@@ -24,3 +24,6 @@ jobs:
       - name: File Organizer regression tests
         shell: bash
         run: bash '⚙️ Applied/04- FILE ORGANIZER/tests/test_organizer.sh'
+      - name: Password generator regression tests
+        shell: bash
+        run: bash '🌱 Foundational/01-Password Generator/tests/test_password_generator.sh'
