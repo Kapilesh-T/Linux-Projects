@@ -87,7 +87,7 @@ unique_destination() {
     fi
 
     candidate="$dest_dir/$filename"
-    while [[ -e "$candidate" ]]; do
+    while [[ -e "$candidate" || -L "$candidate" ]]; do
         attempt=$((attempt + 1))
         if ((attempt > max_attempts)); then
             return 1
@@ -180,6 +180,11 @@ safe_move() {
 
     filename="${src##*/}"
 
+    if [[ -L "$dest_dir" || ( -e "$dest_dir" && ! -d "$dest_dir" ) ]]; then
+        SAFE_MOVE_REASON="unsafe destination directory $dest_dir"
+        return 1
+    fi
+
     if [[ ! -e "$dest_dir" ]]; then
         if [[ "$dry_run" -eq 1 ]]; then
             : # Simulate directory creation; nothing to do in dry-run.
@@ -204,7 +209,7 @@ safe_move() {
     # if something else creates the destination in that tiny window,
     # mv -n refuses instead of overwriting, and we treat that as a
     # normal, loggable failure rather than a crash.
-    if mv -n -- "$src" "$dest" 2>/dev/null; then
+    if mv -nT -- "$src" "$dest" 2>/dev/null && [[ ! -e "$src" && ! -L "$src" ]]; then
         return 0
     else
         SAFE_MOVE_REASON="mv failed (permissions or race condition)"

@@ -50,6 +50,12 @@ validate_input() {
         return 1
     fi
 
+    # Strip leading zeroes before arithmetic; reject oversized numbers.
+    while [[ "$input" == 0?* ]]; do input="${input#0}"; done
+    if [[ ${#input} -gt 3 ]]; then
+        echo "Error: Maximum password length is 128 characters."
+        return 1
+    fi
     if [ "$input" -lt 4 ]; then
         echo -e "${RED}  Error: Minimum password length is 4 characters.${RESET}"
         return 1
@@ -127,6 +133,21 @@ copy_to_clipboard() {
 save_password() {
     local password="$1"
     local filename="generated_password.txt"
+    # Refuse links and non-regular files; keep newly created output private.
+    if [[ -L "$filename" || ( -e "$filename" && ! -f "$filename" ) ]]; then
+        echo "Error: unsafe password output path." >&2
+        return 1
+    fi
+    if [[ -f "$filename" ]]; then
+        if [[ "$(stat -c %h -- "$filename")" != 1 ]] || ! chmod 600 -- "$filename"; then
+            echo "Error: cannot safely restrict password output." >&2
+            return 1
+        fi
+    fi
+    local old_umask
+    old_umask=$(umask)
+    umask 077
+    echo "Warning: this file stores plaintext passwords. Use a password manager for real credentials." >&2
     local timestamp
     timestamp=$(date "+%Y-%m-%d %H:%M:%S")
     local entry="[${timestamp}]  ${password}"
@@ -143,11 +164,11 @@ save_password() {
 
         case "$SAVE_MODE" in
             1)
-                echo "$entry" >> "$filename"
+                if ! printf '%s\n' "$entry" >> "$filename"; then umask "$old_umask"; return 1; fi
                 echo -e "  ${GREEN}✔ Password appended to '$filename'.${RESET}"
                 ;;
             2)
-                echo "$entry" > "$filename"
+                if ! printf '%s\n' "$entry" > "$filename"; then umask "$old_umask"; return 1; fi
                 echo -e "  ${GREEN}✔ '$filename' overwritten with the new password.${RESET}"
                 ;;
             *)
@@ -155,9 +176,10 @@ save_password() {
                 ;;
         esac
     else
-        echo "$entry" > "$filename"
+        if ! (set -o noclobber; printf '%s\n' "$entry" > "$filename"); then umask "$old_umask"; return 1; fi
         echo -e "  ${GREEN}✔ Password saved to '$filename'.${RESET}"
     fi
+    umask "$old_umask"
 }
 
 show_banner
@@ -166,8 +188,11 @@ while true; do
 
     while true; do
         echo -ne "  Enter desired password length ${BOLD}(4 - 128)${RESET}: "
-        read -r LENGTH
-        validate_input "$LENGTH" && break
+        read -r LENGTH || exit 0
+        if validate_input "$LENGTH"; then
+            while [[ "$LENGTH" == 0?* ]]; do LENGTH="${LENGTH#0}"; done
+            break
+        fi
         echo ""
     done
 
