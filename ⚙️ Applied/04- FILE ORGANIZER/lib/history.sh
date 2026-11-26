@@ -121,14 +121,14 @@ undo_last_run() {
             continue
         fi
 
-        if [[ -e "$src" ]]; then
+        if [[ -e "$src" || -L "$src" ]]; then
             echo "  CONFLICT : $src already exists, not restoring $dest"
             conflicts=$((conflicts + 1))
             continue
         fi
 
         mkdir -p -- "$(dirname -- "$src")" 2>/dev/null
-        if mv -n -- "$dest" "$src" 2>/dev/null; then
+        if mv -nT -- "$dest" "$src" 2>/dev/null && [[ ! -e "$dest" && ! -L "$dest" ]]; then
             echo "  RESTORED : $dest -> $src"
             restored=$((restored + 1))
         else
