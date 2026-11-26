@@ -467,6 +467,22 @@ test_sigint_reported_accurately() {
     rm -rf -- "$dir"
 }
 
+# Reject category symlinks rather than moving files outside the target.
+test_symlink_destination_rejected() {
+    run_test "category symlink cannot redirect moves outside target"
+    local dir outside rc
+    dir="$(new_sandbox)"
+    outside="$(new_sandbox)"
+    touch "$dir/photo.jpg"
+    ln -s "$outside" "$dir/Images"
+    rc=0
+    "$ORGANIZER" "$dir" >/dev/null 2>&1 || rc=$?
+    assert_eq "$rc" "3" "unsafe destination is reported as an error"
+    assert_exists "$dir/photo.jpg" "source remains in target"
+    assert_not_exists "$outside/photo.jpg" "no file moved outside target"
+    rm -rf -- "$dir" "$outside"
+}
+
 # --- Run all tests --------------------------------------------------
 main() {
     if [[ ! -x "$ORGANIZER" ]]; then
@@ -488,6 +504,7 @@ main() {
     test_tab_newline_filenames_roundtrip_through_undo
     test_missing_explicit_config_errors
     test_symlinks_never_touched
+    test_symlink_destination_rejected
     test_sigint_reported_accurately
 
     echo
